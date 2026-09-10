@@ -1,0 +1,17 @@
+# secrets
+.env
+.env.*
+
+# virtualenv
+.venv/
+venv/
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# generated at runtime (safe to delete)
+data/
+cache/

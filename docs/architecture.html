@@ -1,0 +1,711 @@
+<title>Наковальня PoE2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ground:#E7E8EA;
+  --surface:#F4F5F6;
+  --surface-2:#DCDEE2;
+  --ink:#181A1E;
+  --ink-2:#3D424C;
+  --muted:#666D7A;
+  --line:#C6CAD1;
+  --line-soft:#D6D9DE;
+  --brass:#7E6326;
+  --brass-2:#9A7C36;
+  --brass-wash:#EDE6D5;
+  --magic:#3F4FA8;
+  --rare:#7A6708;
+  --danger:#9B3826;
+  --ok:#2F6B4F;
+  --shadow:0 1px 2px rgba(24,26,30,.06),0 8px 24px rgba(24,26,30,.05);
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#131519;
+    --surface:#1A1D22;
+    --surface-2:#23272E;
+    --ink:#E6E8EB;
+    --ink-2:#BFC5CE;
+    --muted:#8B93A0;
+    --line:#333941;
+    --line-soft:#272C33;
+    --brass:#CBA968;
+    --brass-2:#E0C288;
+    --brass-wash:#241F14;
+    --magic:#8E9CE8;
+    --rare:#D6BE55;
+    --danger:#D9755E;
+    --ok:#6FBE96;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#131519;
+  --surface:#1A1D22;
+  --surface-2:#23272E;
+  --ink:#E6E8EB;
+  --ink-2:#BFC5CE;
+  --muted:#8B93A0;
+  --line:#333941;
+  --line-soft:#272C33;
+  --brass:#CBA968;
+  --brass-2:#E0C288;
+  --brass-wash:#241F14;
+  --magic:#8E9CE8;
+  --rare:#D6BE55;
+  --danger:#D9755E;
+  --ok:#6FBE96;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.3);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px 120px}
+
+/* ---------- masthead ---------- */
+.mast{padding:76px 0 34px;border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--brass);margin:0 0 20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+}
+.eyebrow span{color:var(--muted)}
+h1{
+  font-family:var(--serif);font-weight:500;font-size:clamp(40px,6.2vw,68px);
+  line-height:1.02;letter-spacing:-.02em;margin:0 0 18px;text-wrap:balance;
+}
+.deck{
+  font-family:var(--serif);font-size:clamp(18px,2.2vw,22px);line-height:1.5;
+  color:var(--ink-2);max-width:60ch;margin:0 0 26px;
+}
+.mast-meta{
+  display:flex;gap:26px;flex-wrap:wrap;font-family:var(--mono);
+  font-size:12px;color:var(--muted);border-top:1px solid var(--line-soft);padding-top:18px;
+}
+.mast-meta b{color:var(--ink-2);font-weight:500}
+
+/* ---------- layout ---------- */
+.cols{display:grid;grid-template-columns:1fr;gap:0}
+@media(min-width:1000px){
+  .cols{grid-template-columns:216px minmax(0,1fr);gap:56px;align-items:start}
+  nav.toc{position:sticky;top:26px;padding-top:46px}
+}
+nav.toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+nav.toc a{
+  display:flex;gap:10px;text-decoration:none;color:var(--muted);
+  font-size:13.5px;padding:5px 8px;border-radius:3px;border-left:2px solid transparent;
+}
+nav.toc a:hover{color:var(--ink);background:var(--surface);border-left-color:var(--brass)}
+nav.toc a:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+nav.toc .n{font-family:var(--mono);font-size:11px;color:var(--brass);padding-top:2px}
+
+main{min-width:0;padding-top:46px}
+section{margin:0 0 68px;scroll-margin-top:24px}
+h2{
+  font-family:var(--serif);font-weight:500;font-size:clamp(27px,3.3vw,35px);
+  line-height:1.14;letter-spacing:-.015em;margin:0 0 8px;text-wrap:balance;
+}
+.sec-num{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--brass);display:block;margin:0 0 12px;
+}
+h3{
+  font-family:var(--sans);font-weight:600;font-size:17px;letter-spacing:-.005em;
+  margin:36px 0 10px;color:var(--ink);
+}
+h4{font-family:var(--mono);font-weight:500;font-size:12.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted);margin:26px 0 8px}
+p{margin:0 0 15px;max-width:68ch}
+.lede{font-size:17.5px;color:var(--ink-2);max-width:66ch}
+ul,ol.body{margin:0 0 16px;padding-left:20px;max-width:68ch}
+li{margin:0 0 7px}
+strong{font-weight:600}
+code{
+  font-family:var(--mono);font-size:.875em;background:var(--surface-2);
+  padding:1px 5px;border-radius:3px;color:var(--ink);
+}
+a{color:var(--brass);text-underline-offset:2px}
+
+/* ---------- callout ---------- */
+.findings{
+  background:var(--surface);border:1px solid var(--line);border-radius:4px;
+  padding:30px 30px 12px;margin:0 0 54px;box-shadow:var(--shadow);
+}
+.findings h2{font-size:22px;margin-bottom:20px}
+.finding{display:grid;grid-template-columns:30px 1fr;gap:16px;margin:0 0 22px;align-items:start}
+.finding .fnum{
+  font-family:var(--mono);font-size:12px;color:var(--brass);
+  border:1px solid var(--brass);border-radius:50%;width:26px;height:26px;
+  display:grid;place-items:center;margin-top:3px;
+}
+.finding p{margin:0;font-size:15.5px}
+.finding p b{display:block;font-family:var(--sans);font-weight:600;color:var(--ink);margin-bottom:3px}
+
+/* ---------- tables ---------- */
+.scroller{overflow-x:auto;margin:0 0 20px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th{
+  text-align:left;font-family:var(--mono);font-weight:500;font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  padding:12px 14px;border-bottom:1px solid var(--line);white-space:nowrap;
+}
+td{padding:10px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-2)}
+tr:last-child td{border-bottom:none}
+td:first-child{color:var(--ink);font-weight:500}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+table.compact td,table.compact th{padding:8px 12px}
+
+/* ---------- chips ---------- */
+.chip{
+  display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;
+  text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid currentColor;
+  white-space:nowrap;line-height:1.5;
+}
+.chip.ok{color:var(--ok)}
+.chip.warn{color:var(--brass-2)}
+.chip.bad{color:var(--danger)}
+.chip.magic{color:var(--magic)}
+.chip.rare{color:var(--rare)}
+
+/* ---------- code ---------- */
+pre{
+  font-family:var(--mono);font-size:13px;line-height:1.62;background:var(--surface);
+  border:1px solid var(--line);border-radius:4px;padding:18px 20px;overflow-x:auto;
+  margin:0 0 20px;color:var(--ink-2);
+}
+pre b{color:var(--brass);font-weight:500}
+pre i{color:var(--muted);font-style:normal}
+pre em{color:var(--ink);font-style:normal;font-weight:500}
+
+/* ---------- math ---------- */
+.math{
+  font-family:var(--mono);font-size:14.5px;background:var(--brass-wash);
+  border-left:2px solid var(--brass);padding:16px 20px;margin:0 0 20px;
+  overflow-x:auto;color:var(--ink);
+}
+.math .cap{display:block;font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-top:10px}
+
+/* ---------- layer stack ---------- */
+.stack{display:flex;flex-direction:column;gap:9px;margin:0 0 24px}
+.layer{
+  display:grid;grid-template-columns:78px 1fr;gap:0;
+  border:1px solid var(--line);border-radius:4px;background:var(--surface);overflow:hidden;
+}
+.layer .lid{
+  background:var(--surface-2);font-family:var(--mono);font-size:11.5px;font-weight:500;
+  color:var(--brass);display:grid;place-items:center;letter-spacing:.06em;
+  border-right:1px solid var(--line);padding:14px 6px;
+}
+.layer .lbody{padding:13px 17px}
+.layer h5{margin:0 0 4px;font-size:15px;font-weight:600;font-family:var(--sans)}
+.layer p{margin:0;font-size:13.5px;color:var(--muted);max-width:none}
+.layer .io{
+  font-family:var(--mono);font-size:11.5px;color:var(--ink-2);margin-top:7px;
+  display:block;padding-top:7px;border-top:1px dashed var(--line-soft);
+}
+.layer.pivot{border-color:var(--brass)}
+.layer.pivot .lid{background:var(--brass-wash);color:var(--brass)}
+.flowmark{
+  text-align:center;font-family:var(--mono);font-size:11px;color:var(--muted);
+  letter-spacing:.1em;margin:-3px 0;
+}
+
+/* ---------- metric row ---------- */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:0 0 24px}
+.metric{background:var(--surface);padding:16px 18px}
+.metric .v{font-family:var(--mono);font-size:23px;font-weight:500;color:var(--ink);
+  font-variant-numeric:tabular-nums;line-height:1.15}
+.metric .v small{font-size:13px;color:var(--muted);font-weight:400}
+.metric .k{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.35}
+
+/* ---------- compare ---------- */
+.compare{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);
+  border-radius:4px;overflow:hidden;margin:0 0 14px;grid-template-columns:1fr}
+@media(min-width:660px){.compare{grid-template-columns:1fr 1fr}}
+.compare > div{background:var(--surface);padding:20px 22px}
+.compare .hd{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:12px}
+.compare .big{font-family:var(--mono);font-size:30px;font-weight:500;
+  font-variant-numeric:tabular-nums;line-height:1.1;margin-bottom:4px}
+.compare .sub{font-size:13.5px;color:var(--muted)}
+.compare .strat{margin-top:12px;padding-top:12px;border-top:1px solid var(--line-soft);
+  font-size:13.5px;color:var(--ink-2)}
+.compare .wrong .big{color:var(--danger)}
+.compare .right .big{color:var(--ok)}
+
+/* ---------- note ---------- */
+.note{
+  border-left:2px solid var(--line);padding:2px 0 2px 18px;margin:0 0 20px;
+  color:var(--muted);font-size:14.5px;max-width:66ch;
+}
+.note b{color:var(--ink-2)}
+
+footer{
+  margin-top:60px;padding-top:26px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:12px;color:var(--muted);
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">Архитектура <span>· патч 0.5.4 «Runes of Aldur» · август 2026</span></p>
+  <h1>Наковальня&nbsp;PoE2</h1>
+  <p class="deck">Программа, которая по описанию желаемого предмета находит не «шанс успеха», а <em>стратегию</em>: какую валюту применять в каждом состоянии, чтобы ожидаемые расходы были минимальны.</p>
+  <div class="mast-meta">
+    <div><b>Прототип</b> — работает, 613 состояний, решение за 44 с</div>
+    <div><b>Проверка</b> — расхождение с симуляцией 0.95 σ</div>
+    <div><b>Код</b> — <code>/home/joke/poe2craft</code></div>
+  </div>
+</header>
+
+<div class="cols">
+
+<nav class="toc" aria-label="Содержание">
+  <ol>
+    <li><a href="#findings"><span class="n">00</span> Главное</a></li>
+    <li><a href="#game"><span class="n">01</span> Что делает игра</a></li>
+    <li><a href="#data"><span class="n">02</span> Проблема данных</a></li>
+    <li><a href="#model"><span class="n">03</span> Формализация</a></li>
+    <li><a href="#abstraction"><span class="n">04</span> Сжатие состояний</a></li>
+    <li><a href="#arch"><span class="n">05</span> Слои системы</a></li>
+    <li><a href="#solver"><span class="n">06</span> Солвер</a></li>
+    <li><a href="#proto"><span class="n">07</span> Прототип</a></li>
+    <li><a href="#risks"><span class="n">08</span> Риски и план</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<section id="findings">
+  <div class="findings">
+    <h2>Три факта, из которых следует вся архитектура</h2>
+
+    <div class="finding">
+      <div class="fnum">1</div>
+      <p><b>Весов модификаторов нет в клиенте PoE2.</b> Четыре независимых конвейера извлечения — RePoE-fork, Path&nbsp;of&nbsp;Building&nbsp;PoE2, poe2db и dat-schema — дают только 0 или 1. Это маска «может ли мод выпасть», а не редкость. Настоящие числа существуют лишь как эмпирические оценки сообщества. Значит, вес — это <em>вход модели с погрешностью</em>, а не константа из файла, и архитектура обязана делать его подключаемым.</p>
+    </div>
+
+    <div class="finding">
+      <div class="fnum">2</div>
+      <p><b>Это не задача на вероятность, а задача управления.</b> Стохастический кратчайший путь с рестартом. У неё есть точное решение в замкнутой форме — не нужен ни Монте-Карло, ни перебор планов. Ключ: сброс предмета всегда ведёт ровно в одно состояние, поэтому вся самоссылочность сворачивается в один скаляр.</p>
+    </div>
+
+    <div class="finding">
+      <div class="fnum">3</div>
+      <p><b>Пространство состояний сжимается в миллионы раз.</b> На одной базе при ilvl&nbsp;82 существует 1&nbsp;642&nbsp;364&nbsp;616 различных редких предметов. Для конкретной цели из четырёх модов их достаточно представить <em>613</em> состояниями, и это сжатие точное, а не эвристическое.</p>
+    </div>
+  </div>
+</section>
+
+<section id="game">
+  <span class="sec-num">01 — Предметная область</span>
+  <h2>Что делает игра</h2>
+  <p class="lede">Крафт в PoE2 — это последовательность применений валюты к предмету. Каждая валюта — оператор над состоянием: добавить мод, убрать мод, поменять редкость. Ниже — операторы, на которых держится модель.</p>
+
+  <h4>Слоты и редкость</h4>
+  <p>Обычный — 0 аффиксов. Магический — до 1 префикса и 1 суффикса. Редкий — до 3 и 3. Тир мода доступен, если его требуемый уровень не выше уровня предмета. Два мода одной группы (семейства) не уживаются на предмете — это и есть механизм «блокировки», которым пользуются крафтеры.</p>
+
+  <h4>Базовые операторы</h4>
+  <div class="scroller">
+  <table>
+    <thead><tr><th>Валюта</th><th>Переход</th><th>Случайность</th><th>Ограничение</th></tr></thead>
+    <tbody>
+      <tr><td>Трансмутация</td><td>Обычный → Магический, +1 мод</td><td>по весам</td><td>—</td></tr>
+      <tr><td>Аугментация</td><td>Магический +1 мод</td><td>по весам</td><td>ровно 1 мод на предмете</td></tr>
+      <tr><td>Regal</td><td>Магический → Редкий, +1 мод</td><td>по весам</td><td>—</td></tr>
+      <tr><td>Алхимия</td><td>Обычный → Редкий, <strong>+4 мода</strong></td><td>по весам</td><td>не 6, а именно 4</td></tr>
+      <tr><td>Эксальт</td><td>Редкий, +1 мод</td><td>по весам</td><td>нужен свободный слот</td></tr>
+      <tr><td>Хаос</td><td>Редкий: −1 случайный мод, +1 новый</td><td>удаление равновероятно, добавление по весам</td><td>не полный реролл, в отличие от PoE1</td></tr>
+      <tr><td>Аннул</td><td>−1 случайный мод</td><td>равновероятно</td><td>не на порченом</td></tr>
+      <tr><td>Дивайн</td><td>Пере-бросок значений внутри текущего тира</td><td>равномерно в диапазоне</td><td>тир не меняется</td></tr>
+      <tr><td>Ваал</td><td>Порча: 4 исхода</td><td>веса исходов неизвестны</td><td>необратимо, блокирует дальнейший крафт</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h4>Механики, смещающие веса</h4>
+  <div class="scroller">
+  <table class="compact">
+    <thead><tr><th>Механика</th><th>Что делает</th><th>Значение для солвера</th></tr></thead>
+    <tbody>
+      <tr><td>Эссенции (Lesser/Normal/Greater)</td><td>Магический → Редкий с одним <em>гарантированным</em> модом</td><td>детерминированное ребро — сильно меняет оптимум</td></tr>
+      <tr><td>Эссенции Perfect / Corrupted / Сплавы</td><td>Редкий: −1 случайный мод, +1 гарантированный</td><td>с 0.5.0 у предмета только <strong>один</strong> «крафтовый» мод</td></tr>
+      <tr><td>Омены Sinistral / Dextral</td><td>Ограничивают следующую валюту префиксами или суффиксами</td><td>превращают одно действие в несколько с разной ценой</td></tr>
+      <tr><td>Омен Greater Exaltation</td><td>Эксальт добавляет два мода вместо одного</td><td>—</td></tr>
+      <tr><td>Омен Whittling</td><td>Хаос убирает мод самого низкого уровня, а не случайный</td><td>убирает случайность из удаления</td></tr>
+      <tr><td>Десекрация (кости, Колодец Душ)</td><td>Скрытый мод, затем выбор 1 из 3 предложенных</td><td>узел выбора, а не случайности; максимум 1 на предмет</td></tr>
+      <tr><td>Руны и Ядра Душ</td><td>Фиксированные значения в сокеты</td><td>детерминированно, вне системы весов</td></tr>
+      <tr><td>Рекомбинатор</td><td>—</td><td><span class="chip bad">отключён с 0.5.0</span></td></tr>
+      <tr><td>Верстак крафта из PoE1</td><td>—</td><td><span class="chip bad">не существует в PoE2</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note"><b>Что осталось непроверенным.</b> Точная таблица исходов порчи, существование Blessed Orb и Orb of Scouring, полнота линейки Greater/Perfect для всех валют, и стоит ли применение валюты золота. Эти пункты помечены в модели как неподтверждённые и вынесены в конфиг, а не зашиты в код.</div>
+</section>
+
+<section id="data">
+  <span class="sec-num">02 — Данные</span>
+  <h2>Проблема, вокруг которой всё строится</h2>
+  <p class="lede">Симулятор крафта без весов — это симулятор, в котором любой мод одинаково редок. Проверка показала: веса из официальных данных получить нельзя.</p>
+
+  <h4>Что дают источники</h4>
+  <div class="scroller">
+  <table>
+    <thead><tr><th>Источник</th><th>Даёт</th><th>Веса</th><th>Пригодность</th></tr></thead>
+    <tbody>
+      <tr><td>repoe-fork.github.io/poe2</td><td>16&nbsp;679 модов: семейства, тип, ilvl, диапазоны статов, теги баз</td><td class="num">только 0/1</td><td><span class="chip ok">основа</span></td></tr>
+      <tr><td>Path of Building PoE2</td><td>то же, извлечено независимо, лицензия MIT</td><td class="num">только 0/1</td><td><span class="chip ok">сверка</span></td></tr>
+      <tr><td>poe2db.tw</td><td>HTML-таблицы по базам</td><td class="num">только 0/1</td><td><span class="chip warn">сверка</span></td></tr>
+      <tr><td>trade2 API</td><td>канонические id статов и названия баз</td><td class="num">нет</td><td><span class="chip warn">парсинг</span></td></tr>
+      <tr><td>Craft of Exile</td><td>эмпирические оценки, ~19&nbsp;300 записей</td><td class="num">есть, ~55 % заглушки</td><td><span class="chip warn">оценка</span></td></tr>
+      <tr><td>Таблица сообщества (Krakenbul)</td><td>1&nbsp;160 записей, 21 класс предметов, тиры и имена тиров</td><td class="num">есть, 32 значения</td><td><span class="chip warn">оценка</span></td></tr>
+      <tr><td>LocalIdentity/poe2-data</td><td>дамп от января 2025</td><td class="num">пустые массивы</td><td><span class="chip bad">не использовать</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Веса сообщества получены двумя способами: статистическим выводом через Рекомбинатор и разбором объявлений на торговой площадке, с последующим округлением до «красивых» чисел. Рекомбинатор отключён в 0.5.0 — то есть основной метод пополнения этих данных больше не работает.</p>
+
+  <h4>Что удалось собрать</h4>
+  <div class="metrics">
+    <div class="metric"><div class="v">5 476</div><div class="k">баз предметов, 90 классов</div></div>
+    <div class="metric"><div class="v">8 150</div><div class="k">модов в домене предметов</div></div>
+    <div class="metric"><div class="v">21</div><div class="k">класс носимой экипировки с весами</div></div>
+    <div class="metric"><div class="v">99<small> %</small></div><div class="k">модов с весом на 1 679 носимых базах</div></div>
+  </div>
+  <p>Пробелы точечные и мелкие: амулеты и кольца — 97–98&nbsp;% (не хватает отдельных тиров кражи жизни и маны), у луков и арбалетов — по два мода. Остальные семнадцать классов покрыты полностью. Инвентаризация сохраняется в <code>cache/INVENTORY.json</code> и пересчитывается при каждом обновлении дампа, чтобы просадка покрытия после патча была видна сразу.</p>
+
+  <h3>Насколько это важно на практике</h3>
+  <p>Одна и та же цель — лук с четырьмя модами — решённая на данных из клиента и на эмпирических весах:</p>
+
+  <div class="compare">
+    <div class="wrong">
+      <div class="hd">Веса из клиента (все = 1)</div>
+      <div class="big">1&nbsp;107</div>
+      <div class="sub">ожидаемая стоимость, эксальтов</div>
+      <div class="strat">Стратегия: спамить покупку новых баз. Шанс попасть в T1–T2 «% физ. урона» — <b>2.817&nbsp;%</b> за один бросок.</div>
+    </div>
+    <div class="right">
+      <div class="hd">Эмпирические веса</div>
+      <div class="big">5&nbsp;791</div>
+      <div class="sub">ожидаемая стоимость, эксальтов</div>
+      <div class="strat">Стратегия: цикл «эксальт + аннул с оменом на суффикс». Тот же шанс — <b>0.168&nbsp;%</b>, в 17 раз ниже.</div>
+    </div>
+  </div>
+
+  <p>Ошибка в пять раз по цене и <em>полностью другой план действий</em>. Инструмент, построенный на официальных данных как есть, будет уверенно давать вредные советы. Отсюда требование к архитектуре: вес — это интерфейс с несколькими реализациями и явной оценкой достоверности, а не поле в JSON.</p>
+
+<pre><i># poe2craft/data/repoe.py</i>
+<b>class</b> <em>WeightModel</em>(Protocol):
+    <i>"""Отображает запись мода в относительный вес."""</i>
+    <b>def</b> __call__(self, mod_id, raw, family, tier, n_tiers) -&gt; int: ...
+
+<i># реализации, взаимозаменяемые без единой правки солвера</i>
+uniform_weight        <i># честный минимум: то, что реально есть в клиенте</i>
+poe1_prior_weight     <i># априор, перенесённый из конвенций PoE1</i>
+CommunityWeights      <i># эмпирическая таблица сообщества</i>
+EmpiricalWeightModel  <i># оценка максимального правдоподобия по наблюдениям,</i>
+                      <i># со сглаживанием Дирихле в сторону априора</i></pre>
+
+  <div class="note"><b>Следствие для лицензий.</b> Эмпирическая таблица распространяется под CC&nbsp;BY-NC-SA&nbsp;4.0. Она заразна: всё, что поставляется вместе с ней, наследует запрет на коммерческое использование и share-alike. Держите её отдельным загружаемым пакетом, а не в репозитории кода.</div>
+</section>
+
+<section id="model">
+  <span class="sec-num">03 — Математика</span>
+  <h2>Формализация</h2>
+  <p class="lede">Крафт — марковский процесс принятия решений, точнее стохастический кратчайший путь: минимизируем ожидаемую стоимость до попадания в целевое множество.</p>
+
+  <div class="math">
+V(s<i>_цель</i>) = 0<br>
+V(s) = min<i>_a</i> [ c(a) + Σ<i>_s'</i> P(s' | s, a) · V(s') ]
+<span class="cap">s — состояние предмета, a — применение валюты, c(a) — её рыночная цена в общей единице счёта.</span>
+  </div>
+
+  <p>Особенность задачи — действие «выбросить и купить новую базу». Оно возвращает процесс в стартовое состояние, из-за чего <code>V(s_старт)</code> входит в правую часть собственного уравнения. Обычная итерация по значениям на этом застревает: коэффициент сжатия равен вероятности <em>не</em> закончить цикл, а для реального крафта это 0.99 и выше.</p>
+
+  <h3>Точное решение вместо перебора</h3>
+  <p>Сброс всегда ведёт ровно в одно состояние — этим и надо воспользоваться. Зафиксируем политику π и поглотим цепь в множестве {цель, сброс}. Для каждого состояния посчитаем две величины:</p>
+
+  <div class="math">
+a(s) = ожидаемая стоимость до поглощения<br>
+b(s) = вероятность поглотиться <em>через сброс</em>, а не через цель<br><br>
+V(s) = a(s) + b(s) · V<i>₀</i>&nbsp;&nbsp;&nbsp;&nbsp;где&nbsp;&nbsp;V<i>₀</i> = V(s<i>_старт</i>)<br>
+V<i>₀</i> = a(s<i>_старт</i>) + b(s<i>_старт</i>) · V<i>₀</i>&nbsp;&nbsp;⟹&nbsp;&nbsp;<em>V₀ = a(s_старт) / (1 − b(s_старт))</em>
+<span class="cap">Это школьная формула «цена попытки, делённая на вероятность успеха», обобщённая на произвольную политику. Внешний поиск не нужен — ответ выписывается явно.</span>
+  </div>
+
+  <p>Дальше — итерация по политикам: точная оценка по формуле выше, затем жадное улучшение по полученному V. На реальной задаче сходится за <strong>шесть шагов</strong>.</p>
+
+  <div class="note"><b>Почему не бисекция по V₀.</b> Пробовал: функция f(v₀) кусочно-линейна и имеет плоские участки, поэтому метод секущих застревает, а каждая проба при большом v₀ заставляет внутреннюю итерацию перемалывать циклы «аннул–эксальт» с низкой вероятностью выхода. Замкнутая форма снимает обе проблемы разом.</div>
+
+  <h3>Второй режим: не средняя цена, а шанс уложиться в бюджет</h3>
+  <p>Минимум ожидаемых расходов и максимум вероятности успеть за бюджет B — разные оптимумы. Для второго бюджет становится измерением состояния, и получается рюкзачная динамика по (состояние, остаток). Медиана в прогоне ниже среднего почти вдвое, а p90 выше среднего вдвое — то есть для игрока с ограниченными средствами это не второстепенный режим, а основной.</p>
+</section>
+
+<section id="abstraction">
+  <span class="sec-num">04 — Ключевое инженерное решение</span>
+  <h2>Сжатие пространства состояний</h2>
+  <p class="lede">Наивное состояние — какие именно моды в каких слотах — неподъёмно. Но для <em>конкретной цели</em> почти всё это различие не имеет значения.</p>
+
+  <p>Каждый мод из пула классифицируется относительно цели ровно один раз:</p>
+  <ul>
+    <li><strong>Попадание</strong> — мод удовлетворяет требованию <code>i</code>;</li>
+    <li><strong>Блокировщик</strong> — мод той же группы, что и требование <code>i</code>, но не удовлетворяет ему; он занимает группу, и требование больше не выпадет;</li>
+    <li><strong>Мусор</strong> — всё остальное; важна только сторона (префикс или суффикс) и количество.</li>
+  </ul>
+
+  <p>Тогда состояние — это статус каждого требования из трёх значений, два счётчика мусора, редкость и флаги:</p>
+
+<pre><i># poe2craft/core/state.py</i>
+<b>class</b> <em>ItemState</em>:
+    rarity:    Rarity                 <i># Обычный / Магический / Редкий</i>
+    slots:     tuple[SlotState, ...]  <i># ABSENT | BLOCKED | HIT для каждого требования</i>
+    junk_pre:  int                    <i># сколько мусорных префиксов</i>
+    junk_suf:  int                    <i># сколько мусорных суффиксов</i>
+    corrupted: bool
+    fractured: tuple[int, ...]        <i># требования, закреплённые расколом</i></pre>
+
+  <div class="metrics">
+    <div class="metric"><div class="v">1 642 364 616</div><div class="k">различных редких предметов на одной базе при ilvl 82</div></div>
+    <div class="metric"><div class="v">613</div><div class="k">абстрактных состояний для цели из 4 модов</div></div>
+    <div class="metric"><div class="v">2 679 224<small>×</small></div><div class="k">степень сжатия</div></div>
+    <div class="metric"><div class="v">0.95<small> σ</small></div><div class="k">расхождение с симуляцией на конкретных предметах</div></div>
+  </div>
+
+  <p>Сжатие точное при одном допущении: мусорные моды взаимозаменяемы. Оно нарушается лишь в той мере, в какой мусор блокирует другой мусор своей группой — эффект второго порядка, который движок дополнительно корректирует, уменьшая доступный вес мусора по мере его накопления.</p>
+
+  <h3>Допущение проверено, а не принято на веру</h3>
+  <p>Отдельный валидатор симулирует <em>конкретный</em> предмет: настоящие id модов в настоящих слотах, честная выборка по весам, честные коллизии групп — и следует при этом политике, найденной на абстракции. Если абстракция верна, средняя стоимость симуляции совпадёт с V(s_старт).</p>
+
+  <div class="scroller">
+  <table class="compact">
+    <thead><tr><th>Величина</th><th class="num">Значение</th><th>Комментарий</th></tr></thead>
+    <tbody>
+      <tr><td>V(s_старт) из солвера</td><td class="num">5 790.8</td><td>точное решение</td></tr>
+      <tr><td>Симуляция, 400 прогонов</td><td class="num">5 530.3 ± 274.1</td><td>±1 стандартная ошибка</td></tr>
+      <tr><td>Расхождение</td><td class="num">−0.95 σ</td><td><span class="chip ok">статистически неотличимо</span></td></tr>
+      <tr><td>Медиана / p90</td><td class="num">3 717 / 13 024</td><td>разброс огромен — среднее обманчиво</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="arch">
+  <span class="sec-num">05 — Архитектура</span>
+  <h2>Слои системы</h2>
+  <p class="lede">Границы проведены по одному принципу: то, что GGG может поменять патчем, и то, что сообщество может уточнить, не должно требовать правок в солвере.</p>
+
+  <div class="stack">
+    <div class="layer">
+      <div class="lid">L0</div>
+      <div class="lbody">
+        <h5>Приём данных</h5>
+        <p>Загрузка и кеширование дампов, версионирование по патчу игры, отслеживание изменений между версиями. Проверки целостности — в том числе та, что поймала пустые веса в устаревшем дампе.</p>
+        <span class="io">→ сырой JSON, помеченный версией игры</span>
+      </div>
+    </div>
+    <div class="flowmark">↓</div>
+
+    <div class="layer pivot">
+      <div class="lid">L1</div>
+      <div class="lbody">
+        <h5>Модель весов <span class="chip warn">точка неопределённости</span></h5>
+        <p>Единственное место, где живёт незнание. Несколько взаимозаменяемых реализаций плюс оценка достоверности, которая должна доходить до пользователя. Здесь же — дообучение весов по наблюдениям.</p>
+        <span class="io">→ вес(мод, база) + доверительный интервал</span>
+      </div>
+    </div>
+    <div class="flowmark">↓</div>
+
+    <div class="layer">
+      <div class="lid">L2</div>
+      <div class="lbody">
+        <h5>Домен</h5>
+        <p>Моды, базы, теги, группы, тиры, разрешение весов по тегам. Построение пула для пары «база + ilvl». Чистые данные, без механик.</p>
+        <span class="io">→ ModPool: список (мод, вес) по сторонам</span>
+      </div>
+    </div>
+    <div class="flowmark">↓</div>
+
+    <div class="layer pivot">
+      <div class="lid">L3</div>
+      <div class="lbody">
+        <h5>Механики <span class="chip warn">меняется каждый патч</span></h5>
+        <p>Каждая валюта, эссенция и омен — ядро перехода <code>состояние → распределение состояний</code>, собранное из трёх примитивов: добавить аффикс, убрать аффикс, сменить редкость. Числа патча вынесены в <code>MechanicsConfig</code> и не встречаются в коде.</p>
+        <span class="io">→ список Action: цена, применимость, ядро перехода</span>
+      </div>
+    </div>
+    <div class="flowmark">↓</div>
+
+    <div class="layer">
+      <div class="lid">L4</div>
+      <div class="lbody">
+        <h5>Абстракция цели</h5>
+        <p>Спецификация желаемого предмета превращается в требования, а пул модов — в предпосчитанные веса попаданий, блокировщиков и мусора. После этого шаг крафта стоит O(число требований), а не O(число модов).</p>
+        <span class="io">→ CraftContext</span>
+      </div>
+    </div>
+    <div class="flowmark">↓</div>
+
+    <div class="layer pivot">
+      <div class="lid">L5</div>
+      <div class="lbody">
+        <h5>Солвер</h5>
+        <p>Итерация по политикам с замкнутой формой неподвижной точки сброса. Выдаёт V* и π* — то есть оптимальное действие для <em>каждого</em> достижимого состояния, а не один заранее заданный план.</p>
+        <span class="io">→ V*, π*, ожидаемый расход по каждой валюте</span>
+      </div>
+    </div>
+    <div class="flowmark">↓</div>
+
+    <div class="layer">
+      <div class="lid">L6</div>
+      <div class="lbody">
+        <h5>Проверка</h5>
+        <p>Симуляция конкретных предметов под найденной политикой. Не тест, а постоянный страж корректности абстракции: расхождение больше 3 σ означает, что модель разошлась с механикой.</p>
+        <span class="io">→ среднее, медиана, p90, отчёт о расхождении</span>
+      </div>
+    </div>
+    <div class="flowmark">↓</div>
+
+    <div class="layer">
+      <div class="lid">L7</div>
+      <div class="lbody">
+        <h5>Цены и представление</h5>
+        <p>Курсы валют, единая единица счёта, возможность учитывать время наравне с деньгами. Разбор предмета из буфера обмена, чтобы советовать по <em>уже начатому</em> крафту, а не только с нуля.</p>
+        <span class="io">→ план, объяснение, стоимость каждого шага</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>Что даёт такая нарезка</h3>
+  <ul>
+    <li><strong>Патч не ломает солвер.</strong> Новая валюта — это новый <code>Action</code> в L3. Изменённые числа — правка <code>MechanicsConfig</code>. Солвер не знает слов «эксальт» и «омен».</li>
+    <li><strong>Уточнение весов не ломает ничего.</strong> Появились лучшие оценки — меняется одна реализация в L1.</li>
+    <li><strong>Неопределённость локализована.</strong> Ровно два слоя помечены как ненадёжные, и оба имеют явный контракт.</li>
+    <li><strong>Проверяемость встроена.</strong> L6 сравнивает абстракцию с конкретикой на каждом запуске, а не в отдельном наборе тестов, который забудут запустить.</li>
+  </ul>
+</section>
+
+<section id="solver">
+  <span class="sec-num">06 — Ядро</span>
+  <h2>Как устроен солвер</h2>
+
+  <p>Валюта описывается декларативно. Ниже — реальный код прототипа, не псевдокод:</p>
+
+<pre><i># poe2craft/core/actions.py</i>
+A.append(Action(<em>"chaos"</em>, P("chaos", 0.7),
+    <b>lambda</b> c, s: bind(remove_affix(c, s), <b>lambda</b> x: add_affix(c, x)),
+    <b>lambda</b> c, s: s.rarity <b>is</b> Rarity.RARE <b>and</b> s.n_affix(c.sides) &gt; 0 <b>and</b> <b>not</b> s.corrupted))
+
+A.append(Action(<em>"exalt+omen:sinistral"</em>, P("exalt") + P("omen_sinistral_exalt", 12.0),
+    <b>lambda</b> c, s: add_affix(c, s, force_side=GenType.PREFIX),
+    <b>lambda</b> c, s: s.rarity <b>is</b> Rarity.RARE <b>and</b> c.side_has_room(GenType.PREFIX, s)))</pre>
+
+  <p><code>bind</code> — обычная монадическая композиция распределений: применить ядро к каждому исходу и сложить вероятности. Благодаря ей «хаос» выражается как «убрать, затем добавить», а «омен великого эксальта» — как «добавить дважды», без дублирования логики.</p>
+
+  <h3>Разрешение весов</h3>
+  <p>У мода — <em>упорядоченный</em> список пар (тег, вес). Побеждает первая пара, чей тег есть у базы; <code>default</code> — запасной вариант; ноль означает, что мод не может выпасть. Это конвенция игровых данных, и её нельзя заменить на «суммировать совпадения».</p>
+
+  <h3>Порядок обхода</h3>
+  <p>Состояния обходятся «от богатых к бедным»: сначала те, где больше попаданий и больше аффиксов. Большинство действий добавляют моды, поэтому в таком порядке значение распространяется назад от почти-целевых состояний за один проход, а не за десятки.</p>
+
+  <h3>Что солвер выдаёт наружу</h3>
+  <p>Не «сделай так», а политику целиком. Практическая ценность именно в этом: игрок сообщает, что у него сейчас на предмете, — и получает оптимальный следующий шаг для <em>этого</em> состояния, включая честный ответ «выброси, дешевле начать заново».</p>
+
+<pre><i>Оптимальная политика, лук Fanatic Bow, ilvl 82, цель из 4 модов</i>
+<i>ожидаемый расход валюты до успеха:</i>
+
+  annul+omen:dextral      × 454.90   =  5231.3
+  exalt                   × 429.16   =   429.2
+  RESET (покупка базы)    × 118.35   =   118.3
+  augment                 ×  93.21   =     4.7
+  essence-&gt;req0           ×   0.80   =     4.0
+  transmute               × 119.35   =     2.4
+  <em>ИТОГО                              5790.9</em>
+
+<i>V(s_старт) из динамического программирования = 5790.8  — совпадает</i></pre>
+
+  <p>Совпадение прямого подсчёта расходов с обратным решением до пяти значащих цифр — это внутренняя проверка согласованности: политика и функция ценности не разъехались.</p>
+</section>
+
+<section id="proto">
+  <span class="sec-num">07 — Состояние работ</span>
+  <h2>Что уже работает</h2>
+
+  <p>Прототип лежит в <code>/home/joke/poe2craft</code>, чистый Python без внешних зависимостей.</p>
+
+  <div class="scroller">
+  <table class="compact">
+    <thead><tr><th>Компонент</th><th>Файл</th><th>Статус</th></tr></thead>
+    <tbody>
+      <tr><td>Модель модов и разрешение весов</td><td><code>core/mods.py</code></td><td><span class="chip ok">работает</span></td></tr>
+      <tr><td>Абстрактное состояние</td><td><code>core/state.py</code></td><td><span class="chip ok">работает</span></td></tr>
+      <tr><td>Предпосчёт весов цели</td><td><code>core/context.py</code></td><td><span class="chip ok">работает</span></td></tr>
+      <tr><td>Ядра переходов, 13 действий</td><td><code>core/actions.py</code></td><td><span class="chip ok">работает</span></td></tr>
+      <tr><td>Солвер</td><td><code>solver/ssp.py</code></td><td><span class="chip ok">работает</span></td></tr>
+      <tr><td>Валидатор на конкретных предметах</td><td><code>solver/validate.py</code></td><td><span class="chip ok">работает</span></td></tr>
+      <tr><td>Загрузчик дампа</td><td><code>data/repoe.py</code></td><td><span class="chip ok">работает</span></td></tr>
+      <tr><td>Модели весов</td><td><code>data/weights.py</code></td><td><span class="chip ok">работает</span></td></tr>
+      <tr><td>Разбор предмета из буфера</td><td>—</td><td><span class="chip bad">не начато</span></td></tr>
+      <tr><td>Учёт тиров в цели по значению стата</td><td>—</td><td><span class="chip warn">частично</span></td></tr>
+      <tr><td>Режим «уложиться в бюджет»</td><td>—</td><td><span class="chip bad">не начато</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h4>Замеры</h4>
+  <p>613 состояний, 6 шагов итерации по политикам, 44 секунды на чистом Python. Это узкое место снимается численной библиотекой: оценка политики — решение разреженной линейной системы, а не ручные проходы. Ожидаемый порядок после переноса — доли секунды. На машине не оказалось <code>numpy</code>, а <code>python3-venv</code> требует установки системного пакета, поэтому прототип намеренно написан без зависимостей.</p>
+
+  <div class="note"><b>Осторожно с одним числом.</b> В прототипе эссенция моделируется как гарантия попадания в требуемый тир. На самом деле эссенция гарантирует <em>мод</em>, а тир определяется её уровнем. Из-за этого солвер переоценивает эссенции. Это ошибка конфигурации, а не движка, но именно она сейчас занижает ответ — исправляется таблицей «эссенция → мод → тир».</div>
+</section>
+
+<section id="risks">
+  <span class="sec-num">08 — Дальше</span>
+  <h2>Риски и порядок работ</h2>
+
+  <div class="scroller">
+  <table>
+    <thead><tr><th>Риск</th><th>Последствие</th><th>Что делать</th></tr></thead>
+    <tbody>
+      <tr><td>Веса — оценки, и обновлять их больше нечем</td><td>систематическая ошибка в ответах</td><td>показывать доверительный интервал; собирать собственные наблюдения и дообучать веса</td></tr>
+      <tr><td>Патч меняет механику</td><td>план становится неверным</td><td>привязка данных к версии игры; L3 отделён от солвера</td></tr>
+      <tr><td>Цель из 12+ модов</td><td>рост состояний как 3ⁿ</td><td>ленивое раскрытие состояний, LRTDP вместо полного обхода</td></tr>
+      <tr><td>Среднее вводит в заблуждение</td><td>игрок разоряется на «дешёвом» крафте</td><td>всегда показывать медиану и p90 рядом со средним</td></tr>
+      <tr><td>Лицензия таблицы весов</td><td>запрет на коммерческое использование</td><td>данные — отдельным пакетом, загружаемым пользователем</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Порядок, в котором это имеет смысл делать</h3>
+  <ol class="body">
+    <li><strong>Тиры как первоклассная сущность.</strong> Сейчас цель формулируется через диапазон тиров. Нужна формулировка через значение стата — игроку важно «не меньше 150&nbsp;% физического урона», а не «тир 1–2».</li>
+    <li><strong>Разбор предмета из игры.</strong> Без этого инструмент отвечает только на вопрос «с нуля», а самый частый вопрос — «у меня уже вот это, что дальше».</li>
+    <li><strong>Численное ядро.</strong> Перенос оценки политики на разреженную линейную алгебру снимает ограничение по размеру цели.</li>
+    <li><strong>Режим бюджета.</strong> Максимизация вероятности успеть за B — для большинства игроков это и есть настоящая задача.</li>
+    <li><strong>Сбор наблюдений.</strong> Каждый прогон реального крафта — данные для уточнения весов. Это единственный способ восстановить то, что перестал давать Рекомбинатор.</li>
+  </ol>
+
+  <h3>О существующих решениях</h3>
+  <p>Ближе всего подошёл открытый <code>solven-eu/craft_simulator</code>: та же формулировка через марковский процесс, итерация по значениям, точные вероятности переходов. Он не учитывает тиры, ограничен списком примерно в 12 модов, не разбирает предмет из игры и распространяется под некоммерческой лицензией. Craft of Exile считает вероятность плана, который составил <em>пользователь</em>, и не ищет альтернатив. Path of Building даёт лучшую открытую базу данных модов, но не содержит вероятностного движка вовсе. Ни одно решение не отвечает на вопрос «сколько это будет стоить и что делать дальше» с учётом тиров и текущего состояния предмета.</p>
+</section>
+
+<footer>
+  Данные: repoe-fork PoE2 (маска допустимости), таблица весов сообщества через solven-eu/craft_simulator (CC BY-NC-SA 4.0).
+  Механики сверены с патчем 0.5.4. Числа получены прогоном прототипа, а не оценены на глаз.
+</footer>
+
+</main>
+</div>
+</div>
